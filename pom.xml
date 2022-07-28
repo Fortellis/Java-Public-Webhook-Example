@@ -50,7 +50,19 @@
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
         <version>20180130</version>
-      </dependency>   
+      </dependency>  
+
+      <dependency>
+        <groupId>com.heroku.api</groupId>
+        <artifactId>heroku-json-jackson</artifactId>
+        <version>0.25</version>
+      </dependency>
+      <dependency>
+        <groupId>com.heroku.api</groupId>
+        <artifactId>heroku-http-apache</artifactId>
+        <version>0.25</version>
+      </dependency>
+      
   </dependencies>
 
   <build>
