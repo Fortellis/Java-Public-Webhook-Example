@@ -44,6 +44,26 @@ public class HelloWorld extends HttpServlet{
         newAsynchronousAPIPost(data);
 
     }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+        ClassLoader classLoader = getClass().getClassLoader();
+        File  wholeFile =new File (classLoader.getResource("queue.json").getFile());
+        FileInputStream fis = new FileInputStream(wholeFile);
+        DataInputStream in = new DataInputStream(fis);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String concatenatedFile = "";
+        String strLine;
+        //Put all the lines from the file back together to make the original object.
+        while((strLine = br.readLine()) != null){
+            //System.out.println(strLine);
+            concatenatedFile = concatenatedFile + strLine;
+        }
+        PrintWriter healthCheckResponse = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        healthCheckResponse.print(concatenatedFile);
+        healthCheckResponse.flush();
+    }
     public void newAsynchronousAPIPost(String newEvent) {
 
         try{

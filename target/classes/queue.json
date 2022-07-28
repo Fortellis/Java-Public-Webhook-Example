@@ -1,1 +1,16 @@
-{"queue": []}
+{"queue": [{
+    "number": 16,
+    "waysToSayHello": [
+        "Hello",
+        "Hola",
+        "Hallo",
+        "Bonjour",
+        "Ola"
+    ],
+    "id": "a94d9845-dc8f-4a68-a50d-2ce1ea0e29e5",
+    "haveYouSaidHello": true,
+    "helloID": {
+        "language": "Alman",
+        "id": "a94d9845-dc8f-4a68-a50d-2ce1ea0e29e5"
+    }
+}]}
