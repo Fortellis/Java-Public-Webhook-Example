@@ -64,7 +64,6 @@
           <configuration>
             <httpConnector>
               <!--host>localhost</host-->
-              <port>9999</port>
             </httpConnector>
           </configuration>
 
