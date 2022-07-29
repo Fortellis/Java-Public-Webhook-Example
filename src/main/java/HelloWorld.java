@@ -35,7 +35,7 @@ public class HelloWorld extends HttpServlet{
         //System.out.println("This is the authorization header: " + authorizationHeader.replace("Bearer", ""));
         try{
             AccessTokenVerifier jwtVerifier = JwtVerifiers.accessTokenVerifierBuilder()
-                .setIssuer("https://identity-dev.fortellis.io/oauth2/aus1ni5i9n9WkzcYa2p7")
+                .setIssuer("https://identity.fortellis.io/oauth2/aus1p1ixy7YL8cMq02p7")
                 .setAudience("api_providers")
                 .setConnectionTimeout(Duration.ofSeconds(1))
                 .build();
@@ -43,7 +43,7 @@ public class HelloWorld extends HttpServlet{
             Jwt jwt = jwtVerifier.decode(authorizationHeader.replace("Bearer", ""));
             System.out.println("This is the authentication decoded: " + jwt);
             System.out.println("This is the subject decode: " + jwt.getClaims().get("sub"));
-            if(jwt.getClaims().get("sub").equals("vTFo25Tp0lWIkUNWy983ObGmr1LHdP6E")){
+            if(jwt.getClaims().get("sub").equals("{yourAPIKey}")){
                 System.out.println("The strings are equal.");
             }else{
                 throw new ServletException("You must have the same subject in your token");
