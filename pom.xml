@@ -45,13 +45,22 @@
         <artifactId>httpclient</artifactId>
         <version>4.4</version>
     </dependency>
-      <dependency>
-        <groupId>org.json</groupId>
-        <artifactId>json</artifactId>
-        <version>20180130</version>
-      </dependency>  
-      
-       
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180130</version>
+    </dependency>
+    <dependency>
+      <groupId>com.okta.jwt</groupId>
+      <artifactId>okta-jwt-verifier</artifactId>
+      <version>0.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.okta.jwt</groupId>
+      <artifactId>okta-jwt-verifier-impl</artifactId>
+      <version>0.5.1</version>
+      <scope>runtime</scope>
+    </dependency>  
   </dependencies>
 
   <build>
@@ -65,6 +74,7 @@
           <configuration>
             <httpConnector>
               <!--host>localhost</host-->
+              <port>9999</port>
             </httpConnector>
           </configuration>
 

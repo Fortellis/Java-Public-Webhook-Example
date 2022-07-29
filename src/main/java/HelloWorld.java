@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.okta.jwt.*;
+import java.time.Duration;
+
 @WebServlet("/helloworld/event")
 public class HelloWorld extends HttpServlet{
 
@@ -25,23 +28,48 @@ public class HelloWorld extends HttpServlet{
         super();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{ 
-        PrintWriter healthCheckResponse = response.getWriter();
-        StringBuilder buffer = new StringBuilder();
-        BufferedReader reader = request.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            buffer.append(line);
-            buffer.append(System.lineSeparator());
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
+        //Get authorization header.
+        String authorizationHeader = request.getHeader("Authorization");
+        //Use the below code for troubleshooting the authorizationHeader.
+        //System.out.println("This is the authorization header: " + authorizationHeader.replace("Bearer", ""));
+        try{
+            AccessTokenVerifier jwtVerifier = JwtVerifiers.accessTokenVerifierBuilder()
+                .setIssuer("https://identity-dev.fortellis.io/oauth2/aus1ni5i9n9WkzcYa2p7")
+                .setAudience("api_providers")
+                .setConnectionTimeout(Duration.ofSeconds(1))
+                .build();
+            //You need to set the subject to the client ID in here somewhere.
+            Jwt jwt = jwtVerifier.decode(authorizationHeader.replace("Bearer", ""));
+            System.out.println("This is the authentication decoded: " + jwt);
+            System.out.println("This is the subject decode: " + jwt.getClaims().get("sub"));
+            if(jwt.getClaims().get("sub").equals("vTFo25Tp0lWIkUNWy983ObGmr1LHdP6E")){
+                System.out.println("The strings are equal.");
+            }else{
+                throw new ServletException("You must have the same subject in your token");
+            }
+            PrintWriter healthCheckResponse = response.getWriter();
+            StringBuilder buffer = new StringBuilder();
+            BufferedReader reader = request.getReader();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
+                buffer.append(System.lineSeparator());
+            }
+            String data = buffer.toString();
+            System.out.println("This is your request: "+ data);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+            healthCheckResponse.print("");
+            healthCheckResponse.flush();
+            newAsynchronousAPIPost(data);
+    
+        }catch(Exception e){
+            System.out.println("You had a problem with the token.");
         }
-        String data = buffer.toString();
-        System.out.println("This is your request: "+ data);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.setStatus(HttpServletResponse.SC_ACCEPTED);
-        healthCheckResponse.print("");
-        healthCheckResponse.flush();
-        newAsynchronousAPIPost(data);
+
+
 
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
