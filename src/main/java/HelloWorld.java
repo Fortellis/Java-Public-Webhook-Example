@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.okta.jwt.*;
 import java.time.Duration;
 
-@WebServlet("/helloworld/event")
 public class HelloWorld extends HttpServlet{
 
     public HelloWorld(){
